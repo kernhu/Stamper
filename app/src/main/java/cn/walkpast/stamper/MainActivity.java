@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_text:
 
                     Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_3);
-
                     Stamper.with(MainActivity.this)
                             .setLabel("National Geography")
                             .setLabelColor(getResources().getColor(R.color.theme))//Color.rgb(255, 60, 70)
