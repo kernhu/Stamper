@@ -10,6 +10,7 @@ Stamper是一个给图片打水印的工具，支持图片水印和文字水印�
 ##  I: How to use Stamper.
 ### 1.use it stamp a text;
 
+```
 Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_3);
 Stamper.with(MainActivity.this)
       .setLabel("National Geography")
@@ -33,11 +34,11 @@ Stamper.with(MainActivity.this)
         }
       })
       .build();
-
-
+```
 
 ### 2.use it stamp a image;
 
+```
 Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_4);
 Bitmap watermark = BitmapFactory.decodeResource(getResources(), R.drawable.ic_watermark);
 Stamper.with(MainActivity.this)
@@ -60,25 +61,25 @@ Stamper.with(MainActivity.this)
         }
       })
       .build();
-
+```
 
 ## II: Add Stamper to your project
 
 ### Step 1. Add the JitPack repository to your build file; Add it in your root build.gradle at the end of repositories:
-
+```
 	allprojects {
         repositories {
         ...
         maven { url 'https://jitpack.io' }
         }
         }
-	
+```
 ### Step 2. Add the dependency
-
+```
 	dependencies {
 	        implementation 'com.github.KernHu:RahmenView:v1.2'
 	}
-	
+```
 ## III: Contact me
 
 Email: vsky580@gmail.com  
