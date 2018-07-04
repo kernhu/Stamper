@@ -1,11 +1,12 @@
 # Stamper
 Stamper is a tool for stamping a pattern into a picture,likes a watermark.
+
 Stamper是一个给图片打水印的工具，支持图片水印和文字水印，水印位置可以任意调节。
 
 
 
-![](https://github.com/KernHu/RahmenView/raw/master/screenshot/screenshot1.png)  
-![](https://github.com/KernHu/RahmenView/raw/master/screenshot/screenshot2.png)  
+![](https://github.com/KernHu/Stamper/raw/master/screenshot/screenshot1.png)  
+![](https://github.com/KernHu/Stamper/raw/master/screenshot/screenshot2.png)  
 
 ##  I: How to use Stamper.
 ### 1.use it stamp a text;
@@ -77,7 +78,7 @@ Stamper.with(MainActivity.this)
 ### Step 2. Add the dependency
 ```
 	dependencies {
-	        implementation 'com.github.KernHu:RahmenView:v1.2'
+	         implementation 'com.github.KernHu:Stamper:1.0'
 	}
 ```
 ## III: Contact me
