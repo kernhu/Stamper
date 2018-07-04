@@ -4,8 +4,8 @@ Stamper是一个给图片打水印的工具，支持图片水印和文字水印�
 
 
 
-![](https://github.com/KernHu/RahmenView/raw/master/screenshot/10010.gif)  
-![](https://github.com/KernHu/RahmenView/raw/master/screenshot/10011.gif)  
+![](https://github.com/KernHu/RahmenView/raw/master/screenshot/screenshot1.png)  
+![](https://github.com/KernHu/RahmenView/raw/master/screenshot/screenshot2.png)  
 
 ##  I: How to use Stamper.
 ### 1.use it stamp a text;
