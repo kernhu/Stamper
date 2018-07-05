@@ -1,5 +1,5 @@
 # Stamper
-Stamper is a tool for stamping a pattern into a picture,likes a watermark.
+Stamper is a tool for stamping a pattern into a picture,it likes a watermark.
 
 Stamper是一个给图片打水印的工具，支持图片水印和文字水印，水印位置可以任意调节。
 
@@ -20,20 +20,8 @@ Stamper.with(MainActivity.this)
       .setMasterBitmap(bitmap3)
       .setStampType(StampType.TEXT)
       .setStampPadding(new StampPadding(bitmap3.getWidth() / 4, bitmap3.getHeight() / 6))
-      .setStampWatcher(new StampWatcher() {
-
-        @Override
-        protected void onSuccess(Bitmap bitmap) {
-          super.onSuccess(bitmap);
-
-        }
-
-        @Override
-        protected void onError(String error) {
-          super.onError(error);
-
-        }
-      })
+      .setStampWatcher(mStampWatcher)
+      .setRequestId(1001)
       .build();
 ```
 
@@ -47,21 +35,47 @@ Stamper.with(MainActivity.this)
       .setWatermark(watermark)
       .setStampType(StampType.IMAGE)
       .setStampPadding(new StampPadding(bitmap4.getWidth() - watermark.getWidth() - 40, 40))
-      .setStampWatcher(new StampWatcher() {
-
-        @Override
-        protected void onSuccess(Bitmap bitmap) {
-          super.onSuccess(bitmap);
-
-        }
-
-        @Override
-        protected void onError(String error) {
-          super.onError(error);
-
-        }
-      })
+      .setStampWatcher(mStampWatcher)
+      .setRequestId(1002)
       .build();
+```
+### 3.the callback
+
+```
+StampWatcher mStampWatcher = new StampWatcher() {
+        @Override
+        protected void onSuccess(Bitmap bitmap, int requestId) {
+            super.onSuccess(bitmap, requestId);
+			
+            switch (requestId) {
+
+                case 1001:
+                    //the result of text stamper
+
+                    break;
+                case 1002:
+                    //the result of image stamper
+
+                    break;
+            }
+        }
+
+        @Override
+        protected void onError(String error, int requestId) {
+            super.onError(error, requestId);
+
+            switch (requestId) {
+
+                case 1001://
+
+                    break;
+                case 1002://
+
+                    break;
+            }
+        }
+    };
+
 ```
 
 ## II: Add Stamper to your project
@@ -78,7 +92,7 @@ Stamper.with(MainActivity.this)
 ### Step 2. Add the dependency
 ```
 	dependencies {
-	         implementation 'com.github.KernHu:Stamper:1.0'
+	         implementation 'com.github.KernHu:Stamper:1.1'
 	}
 ```
 ## III: Contact me
