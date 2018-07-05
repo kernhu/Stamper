@@ -11,11 +11,11 @@ import android.graphics.Bitmap;
 public abstract class StampWatcher {
 
 
-    protected void onSuccess(Bitmap bitmap) {
+    protected void onSuccess(Bitmap bitmap, int requestId) {
 
 
     }
 
-    protected void onError(String error) {
+    protected void onError(String error, int requestId) {
     }
 }

@@ -29,6 +29,7 @@ public class Stamper {
     private String mLabel;
     private int mLabelSize;
     private int mLabelColor;
+    private int mRequestId;
     private StampType mStampType;
     private StampWatcher mStampWatcher;
 
@@ -86,6 +87,15 @@ public class Stamper {
         return this;
     }
 
+    public int getRequestId() {
+        return mRequestId;
+    }
+
+    public Stamper setRequestId(int requestId) {
+        mRequestId = requestId;
+        return this;
+    }
+
     public StampWatcher getStampWatcher() {
         return mStampWatcher;
     }
@@ -114,10 +124,10 @@ public class Stamper {
             switch (mStampType) {
 
                 case TEXT:
-                    mStampManager.stampText(mMasterBitmap, mLabel, mLabelSize, mLabelColor, mStampPadding);
+                    mStampManager.stampText(mMasterBitmap, mLabel, mLabelSize, mLabelColor, mStampPadding,mRequestId);
                     break;
                 case IMAGE:
-                    mStampManager.stampImage(mMasterBitmap, mWatermark, mStampPadding);
+                    mStampManager.stampImage(mMasterBitmap, mWatermark, mStampPadding,mRequestId);
                     break;
 
             }
@@ -127,26 +137,26 @@ public class Stamper {
     protected boolean checkParams() {
 
         if (mContext == null) {
-            throw new NullPointerException("Context can't be null");
+            throw new NullPointerException("Context can't be null,please set a value for Context.");
         }
 
         if (mStampType == null) {
-            throw new NullPointerException("StampType can't be null");
+            throw new NullPointerException("StampType can't be null,please set a value for StampType.");
         }
 
         if (mMasterBitmap == null) {
-            throw new NullPointerException("MasterBitmap can't be null");
+            throw new NullPointerException("MasterBitmap can't be null,please set a value for MasterBitmap.");
         }
 
         if (mStampWatcher == null) {
-            throw new NullPointerException("StampWatcher can't be null");
+            throw new NullPointerException("StampWatcher can't be null,please set a value for StampWatcher.");
         }
 
         switch (mStampType) {
 
             case TEXT:
                 if (TextUtils.isEmpty(mLabel)) {
-                    throw new NullPointerException("Label can't be null");
+                    throw new NullPointerException("Label can't be null,please set a value for Label.");
                 }
                 break;
 
@@ -154,7 +164,7 @@ public class Stamper {
 
 
                 if (mWatermark == null) {
-                    throw new NullPointerException("Watermark can't be null");
+                    throw new NullPointerException("Watermark can't be null,please set a value for Watermark.");
                 }
 
                 break;

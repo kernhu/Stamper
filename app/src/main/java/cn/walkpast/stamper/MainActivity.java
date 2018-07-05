@@ -49,20 +49,8 @@ public class MainActivity extends AppCompatActivity {
                             .setMasterBitmap(bitmap3)
                             .setStampType(StampType.TEXT)
                             .setStampPadding(new StampPadding(bitmap3.getWidth() / 4, bitmap3.getHeight() / 6))
-                            .setStampWatcher(new StampWatcher() {
-
-                                @Override
-                                protected void onSuccess(Bitmap bitmap) {
-                                    super.onSuccess(bitmap);
-                                    mShowImage.setImageBitmap(bitmap);
-                                }
-
-                                @Override
-                                protected void onError(String error) {
-                                    super.onError(error);
-                                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-                                }
-                            })
+                            .setStampWatcher(mStampWatcher)
+                            .setRequestId(1001)
                             .build();
 
 
@@ -79,21 +67,51 @@ public class MainActivity extends AppCompatActivity {
                             .setWatermark(watermark)
                             .setStampType(StampType.IMAGE)
                             .setStampPadding(new StampPadding(bitmap4.getWidth() - watermark.getWidth() - 40, 40))
-                            .setStampWatcher(new StampWatcher() {
-
-                                @Override
-                                protected void onSuccess(Bitmap bitmap) {
-                                    super.onSuccess(bitmap);
-                                    mShowImage.setImageBitmap(bitmap);
-                                }
-
-                                @Override
-                                protected void onError(String error) {
-                                    super.onError(error);
-                                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-                                }
-                            })
+                            .setStampWatcher(mStampWatcher)
+                            .setRequestId(1002)
                             .build();
+
+                    break;
+            }
+        }
+    };
+
+    StampWatcher mStampWatcher = new StampWatcher() {
+        @Override
+        protected void onSuccess(Bitmap bitmap, int requestId) {
+            super.onSuccess(bitmap, requestId);
+
+            switch (requestId) {
+
+                case 1001:
+                    //the result of text stamper
+
+                    mShowImage.setImageBitmap(bitmap);
+
+                    break;
+                case 1002:
+                    //the result of image stamper
+
+                    mShowImage.setImageBitmap(bitmap);
+
+                    break;
+            }
+        }
+
+        @Override
+        protected void onError(String error, int requestId) {
+            super.onError(error, requestId);
+
+            switch (requestId) {
+
+                case 1001://
+
+                    Toast.makeText(MainActivity.this, "error:" + error, Toast.LENGTH_SHORT).show();
+
+                    break;
+                case 1002://
+
+                    Toast.makeText(MainActivity.this, "error:" + error, Toast.LENGTH_SHORT).show();
 
                     break;
             }

@@ -28,7 +28,7 @@ public class StampManager {
      * @param watermark
      * @param padding
      */
-    public void stampImage(Bitmap masterBitmap, Bitmap watermark, StampPadding padding) {
+    public void stampImage(Bitmap masterBitmap, Bitmap watermark, StampPadding padding,int requestId) {
 
         int width = masterBitmap.getWidth();
         int height = masterBitmap.getHeight();
@@ -50,12 +50,12 @@ public class StampManager {
             canvas.restore();
 
             if (mStampWatcher != null) {
-                mStampWatcher.onSuccess(newBitmap);
+                mStampWatcher.onSuccess(newBitmap,requestId);
             }
         } catch (Exception e) {
 
             if (mStampWatcher != null) {
-                mStampWatcher.onError(e.getMessage());
+                mStampWatcher.onError(e.getMessage(),requestId);
             }
         }
     }
@@ -69,7 +69,7 @@ public class StampManager {
      * @param labelColor
      * @param padding
      */
-    public void stampText(Bitmap masterBitmap, String label, int labelSize, int labelColor, StampPadding padding) {
+    public void stampText(Bitmap masterBitmap, String label, int labelSize, int labelColor, StampPadding padding,int requestId) {
 
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
@@ -90,12 +90,12 @@ public class StampManager {
             canvas.save(Canvas.ALL_SAVE_FLAG);
             canvas.restore();
             if (mStampWatcher != null) {
-                mStampWatcher.onSuccess(newBitmap);
+                mStampWatcher.onSuccess(newBitmap,requestId);
             }
         } catch (Exception e) {
 
             if (mStampWatcher != null) {
-                mStampWatcher.onError(e.getMessage());
+                mStampWatcher.onError(e.getMessage(),requestId);
             }
         }
     }
