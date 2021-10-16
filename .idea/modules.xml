@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Stamper.iml" filepath="$PROJECT_DIR$/Stamper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/stamperlib/stamperlib.iml" filepath="$PROJECT_DIR$/stamperlib/stamperlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stamper.iml" filepath="$PROJECT_DIR$/.idea/modules/Stamper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Stamper.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Stamper.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stamperlib/Stamper.stamper.iml" filepath="$PROJECT_DIR$/.idea/modules/stamperlib/Stamper.stamper.iml" />
     </modules>
   </component>
 </project>

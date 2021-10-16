@@ -1,1 +1,1 @@
-include ':app', ':stamperlib'
+include ':app', ':stamper'
