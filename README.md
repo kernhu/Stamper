@@ -12,32 +12,36 @@ Stamper是一个给图片打水印的工具，支持图片水印和文字水印�
 ### 1.use it stamp a text;
 
 ```
-Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_3);
-Stamper.with(MainActivity.this)
-      .setLabel("National Geography")
-      .setLabelColor(getResources().getColor(R.color.theme))//Color.rgb(255, 60, 70)
-      .setLabelSize(60)
-      .setMasterBitmap(bitmap3)
-      .setStampType(StampType.TEXT)
-      .setStampPadding(new StampPadding(bitmap3.getWidth() / 4, bitmap3.getHeight() / 6))
-      .setStampWatcher(mStampWatcher)
-      .setRequestId(1001)
-      .build();
+                            Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_3);
+                            Stamper.with()
+                                    .setLabel("National Geography")
+                                    .setLabelColor(getResources().getColor(R.color.theme))//Color.rgb(255, 60, 70)
+                                    .setLabelSize(60)
+                                    .setMasterBitmap(bitmap3)
+                                    .setStampType(StampType.TEXT)
+                                    .setStampTextCoordinate(new StampCoordinate(0, 0))
+                                    .setStampWatcher(mStampWatcher)
+                                    .setRequestId(1001)
+                                    .build();
 ```
 
 ### 2.use it stamp a image;
 
 ```
-Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_4);
-Bitmap watermark = BitmapFactory.decodeResource(getResources(), R.drawable.ic_watermark);
-Stamper.with(MainActivity.this)
-      .setMasterBitmap(bitmap4)
-      .setWatermark(watermark)
-      .setStampType(StampType.IMAGE)
-      .setStampPadding(new StampPadding(bitmap4.getWidth() - watermark.getWidth() - 40, 40))
-      .setStampWatcher(mStampWatcher)
-      .setRequestId(1002)
-      .build();
+                    Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(), R.drawable.sample_plot_4);
+                    Bitmap watermark = BitmapFactory.decodeResource(getResources(), R.drawable.ic_watermark);
+
+                    int x = StampUtils.getImageWidthAndHeight(bitmap4)[0] - StampUtils.getImageWidthAndHeight(watermark)[0];
+                    int y = StampUtils.getImageWidthAndHeight(bitmap4)[1] - StampUtils.getImageWidthAndHeight(watermark)[1];
+
+                    Stamper.with()
+                            .setMasterBitmap(bitmap4)
+                            .setWatermark(watermark)
+                            .setStampType(StampType.IMAGE)
+                            .setStampImageCoordinate(new StampCoordinate(x, y))
+                            .setStampWatcher(mStampWatcher)
+                            .setRequestId(1002)
+                            .build();
 ```
 ### 3.the callback
 
