@@ -93,10 +93,10 @@ StampWatcher mStampWatcher = new StampWatcher() {
         }
         }
 ```
-### Step 2. Add the dependency
+### Step 2. Add the dependency [![](https://jitpack.io/v/kernhu/Stamper.svg)](https://jitpack.io/#kernhu/Stamper)
 ```
 	dependencies {
-	         implementation 'com.github.KernHu:Stamper:1.1'
+	            implementation 'com.github.kernhu:Stamper:Tag'
 	}
 ```
 ## III: Contact me
