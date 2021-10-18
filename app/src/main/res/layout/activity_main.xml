@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xcion.stamp.MainActivity">
@@ -22,12 +22,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="TEXT(文字)"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#ffffff"/>
+            android:background="#ffffff" />
 
         <TextView
             android:id="@+id/btn_image"
@@ -36,18 +36,29 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="IMAGE(图片)"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ffffff" />
+
+        <TextView
+            android:id="@+id/btn_teletext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TELETEXT(图文)"
+            android:textSize="18sp" />
 
     </LinearLayout>
-
 
     <ImageView
         android:id="@+id/show_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_layout"
-        android:scaleType="centerInside"
-        android:src="@drawable/sample_plot_3"/>
-
+        android:src="@drawable/sample_plot_3" />
 
 </RelativeLayout>

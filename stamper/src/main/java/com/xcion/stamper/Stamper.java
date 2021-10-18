@@ -1,8 +1,12 @@
 package com.xcion.stamper;
 
-import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Author: Kern
@@ -12,158 +16,199 @@ import android.text.TextUtils;
 
 public class Stamper {
 
-    private Context mContext;
-    private StampManager mStampManager;
+    private static StampManager mStampManager = new StampManager();
+    private static Handler mHandler = new Handler(Looper.getMainLooper());
+    private static ExecutorService mExecutorService = Executors.newCachedThreadPool();
+    private static Stamper.Builder mBuilder;
 
-    public Stamper(Context context) {
-        mContext = context;
-    }
-
-    public static Stamper with(Context context) {
-        return new Stamper(context);
-    }
-
-    private Bitmap mMasterBitmap;
-    private Bitmap mWatermark;
-    private StampPadding mStampPadding = new StampPadding(10, 10);
-    private String mLabel;
-    private int mLabelSize;
-    private int mLabelColor;
-    private int mRequestId;
-    private StampType mStampType;
-    private StampWatcher mStampWatcher;
-
-    public Bitmap getMasterBitmap() {
-        return mMasterBitmap;
-    }
-
-    public Stamper setMasterBitmap(Bitmap masterBitmap) {
-        mMasterBitmap = masterBitmap;
-        return this;
-    }
-
-    public Bitmap getWatermark() {
-        return mWatermark;
-    }
-
-    public Stamper setWatermark(Bitmap watermark) {
-        mWatermark = watermark;
-        return this;
-    }
-
-    public StampPadding getStampPadding() {
-        return mStampPadding;
-    }
-
-    public Stamper setStampPadding(StampPadding stampPadding) {
-        mStampPadding = stampPadding;
-        return this;
-    }
-
-    public String getLabel() {
-        return mLabel;
-    }
-
-    public Stamper setLabel(String label) {
-        mLabel = label;
-        return this;
-    }
-
-    public int getLabelSize() {
-        return mLabelSize;
-    }
-
-    public Stamper setLabelSize(int labelSize) {
-        mLabelSize = labelSize;
-        return this;
-    }
-
-    public int getLabelColor() {
-        return mLabelColor;
-    }
-
-    public Stamper setLabelColor(int labelColor) {
-        mLabelColor = labelColor;
-        return this;
-    }
-
-    public int getRequestId() {
-        return mRequestId;
-    }
-
-    public Stamper setRequestId(int requestId) {
-        mRequestId = requestId;
-        return this;
-    }
-
-    public StampWatcher getStampWatcher() {
-        return mStampWatcher;
-    }
-
-    public Stamper setStampWatcher(StampWatcher stampWatcher) {
-        mStampWatcher = stampWatcher;
-        return this;
-    }
-
-    public StampType getStampType() {
-        return mStampType;
-    }
-
-    public Stamper setStampType(StampType stampType) {
-        mStampType = stampType;
-        return this;
-    }
-
-    public void build() {
-
-        if (checkParams()) {
-
-            if (mStampManager == null) {
-                mStampManager = new StampManager(mContext, mStampWatcher);
+    public static Stamper.Builder with() {
+        synchronized (Stamper.class) {
+            if (mBuilder == null) {
+                mBuilder = new Stamper.Builder();
             }
-            switch (mStampType) {
+        }
+        return mBuilder;
+    }
 
-                case TEXT:
-                    mStampManager.stampText(mMasterBitmap, mLabel, mLabelSize, mLabelColor, mStampPadding,mRequestId);
-                    break;
-                case IMAGE:
-                    mStampManager.stampImage(mMasterBitmap, mWatermark, mStampPadding,mRequestId);
-                    break;
+    public static void onDestroy() {
 
-            }
+        if (mExecutorService != null) {
+            mExecutorService.shutdownNow();
+            mExecutorService = null;
+        }
+
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
+
+        if (mStampManager != null) {
+            mStampManager = null;
+        }
+
+        if (mBuilder != null) {
+            mBuilder = null;
+        }
+
+    }
+
+    public Stamper(Builder builder) {
+        mExecutorService.execute(new WorkerRunnable(mHandler, builder));
+    }
+
+
+    public static class Builder {
+
+        private Bitmap masterBitmap;
+        private Bitmap watermark;
+        private StampCoordinate stampTextCoordinate = new StampCoordinate(10, 10);
+        private StampCoordinate stampImageCoordinate = new StampCoordinate(10, 10);
+        private String label;
+        private int labelSize;
+        private int labelColor;
+        private int requestId;
+        private StampType stampType;
+        private StampWatcher stampWatcher;
+
+        public Bitmap getMasterBitmap() {
+            return masterBitmap;
+        }
+
+        public Builder setMasterBitmap(Bitmap masterBitmap) {
+            this.masterBitmap = masterBitmap;
+            return this;
+        }
+
+        public Bitmap getWatermark() {
+            return watermark;
+        }
+
+        public Builder setWatermark(Bitmap watermark) {
+            this.watermark = watermark;
+            return this;
+        }
+
+        public StampCoordinate getStampTextCoordinate() {
+            return stampTextCoordinate;
+        }
+
+        public Builder setStampTextCoordinate(StampCoordinate stampTextCoordinate) {
+            this.stampTextCoordinate = stampTextCoordinate;
+            return this;
+        }
+
+        public StampCoordinate getStampImageCoordinate() {
+            return stampImageCoordinate;
+        }
+
+        public Builder setStampImageCoordinate(StampCoordinate stampImageCoordinate) {
+            this.stampImageCoordinate = stampImageCoordinate;
+            return this;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public Builder setLabel(String label) {
+            this.label = label;
+            return this;
+        }
+
+        public int getLabelSize() {
+            return labelSize;
+        }
+
+        public Builder setLabelSize(int labelSize) {
+            this.labelSize = labelSize;
+            return this;
+        }
+
+        public int getLabelColor() {
+            return labelColor;
+        }
+
+        public Builder setLabelColor(int labelColor) {
+            this.labelColor = labelColor;
+            return this;
+        }
+
+        public int getRequestId() {
+            return requestId;
+        }
+
+        public Builder setRequestId(int requestId) {
+            this.requestId = requestId;
+            return this;
+        }
+
+        public StampType getStampType() {
+            return stampType;
+        }
+
+        public Builder setStampType(StampType stampType) {
+            this.stampType = stampType;
+            return this;
+        }
+
+        public StampWatcher getStampWatcher() {
+            return stampWatcher;
+        }
+
+        public Builder setStampWatcher(StampWatcher stampWatcher) {
+            this.stampWatcher = stampWatcher;
+            return this;
+        }
+
+        public Stamper build() {
+            return new Stamper(this);
         }
     }
 
-    protected boolean checkParams() {
+    /**
+     * check param
+     *
+     * @return
+     */
+    protected boolean checkParams(Builder builder) {
 
-        if (mContext == null) {
-            throw new NullPointerException("Context can't be null,please set a value for Context.");
+        if (builder == null) {
+            return false;
         }
 
-        if (mStampType == null) {
+        if (builder.stampType == null) {
             throw new NullPointerException("StampType can't be null,please set a value for StampType.");
         }
 
-        if (mMasterBitmap == null) {
+        if (builder.masterBitmap == null) {
             throw new NullPointerException("MasterBitmap can't be null,please set a value for MasterBitmap.");
         }
 
-        if (mStampWatcher == null) {
+        if (builder.stampWatcher == null) {
             throw new NullPointerException("StampWatcher can't be null,please set a value for StampWatcher.");
         }
 
-        switch (mStampType) {
+        switch (builder.stampType) {
 
             case TEXT:
-                if (TextUtils.isEmpty(mLabel)) {
+                if (TextUtils.isEmpty(builder.label)) {
                     throw new NullPointerException("Label can't be null,please set a value for Label.");
                 }
                 break;
 
             case IMAGE:
 
+                if (builder.watermark == null) {
+                    throw new NullPointerException("Watermark can't be null,please set a value for Watermark.");
+                }
 
-                if (mWatermark == null) {
+                break;
+            default:
+
+                if (TextUtils.isEmpty(builder.label)) {
+                    throw new NullPointerException("Label can't be null,please set a value for Label.");
+                }
+                if (builder.watermark == null) {
                     throw new NullPointerException("Watermark can't be null,please set a value for Watermark.");
                 }
 
@@ -171,5 +216,38 @@ public class Stamper {
         }
 
         return true;
+    }
+
+    private class WorkerRunnable implements Runnable {
+
+        private Handler handler;
+        private Builder builder;
+
+        public WorkerRunnable(Handler handler, Builder builder) {
+            this.handler = handler;
+            this.builder = builder;
+        }
+
+        @Override
+        public void run() {
+
+            if (checkParams(builder)) {
+                try {
+                    mStampManager.stamp(handler, builder);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (handler != null) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (builder.getStampWatcher() != null) {
+                                    builder.getStampWatcher().onError(e.getMessage(), builder.getRequestId());
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
     }
 }
