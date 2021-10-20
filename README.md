@@ -104,7 +104,6 @@ StampWatcher mStampWatcher = new StampWatcher() {
 
 Email: vsky580@gmail.com  
 Facebook: https://www.facebook.com/kern.hu.580
-
 QQ群：43447852
 
 I'm kern....
