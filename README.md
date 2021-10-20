@@ -1,15 +1,16 @@
 # Stamper
+
 Stamper is a tool for stamping a pattern into a picture,it likes a watermark.
 
 Stamper是一个给图片打水印的工具，支持图片水印和文字水印，水印位置可以任意调节。
 
-The last version  [![](https://jitpack.io/v/kernhu/Stamper.svg)](https://jitpack.io/#kernhu/Stamper)
-
+[![](https://jitpack.io/v/kernhu/Stamper.svg)](https://jitpack.io/#kernhu/Stamper)
 
 ![](https://github.com/KernHu/Stamper/raw/master/screenshot/screenshot1.png)  
-![](https://github.com/KernHu/Stamper/raw/master/screenshot/screenshot2.png)  
+![](https://github.com/KernHu/Stamper/raw/master/screenshot/screenshot2.png)
 
-##  I: How to use Stamper.
+## I: How to use Stamper.
+
 ### 1.use it stamp a text;
 
 ```
@@ -44,6 +45,7 @@ The last version  [![](https://jitpack.io/v/kernhu/Stamper.svg)](https://jitpack
         .setRequestId(1002)
         .build();
 ```
+
 ### 3.the callback
 
 ```
@@ -86,6 +88,7 @@ StampWatcher mStampWatcher = new StampWatcher() {
 ## II: Add Stamper to your project
 
 ### Step 1. Add the JitPack repository to your build file; Add it in your root build.gradle at the end of repositories:
+
 ```
 	allprojects {
         repositories {
@@ -94,12 +97,15 @@ StampWatcher mStampWatcher = new StampWatcher() {
         }
         }
 ```
+
 ### Step 2. Add the dependency
+
 ```
 	dependencies {
-	            implementation 'com.github.kernhu:Stamper:Tag'
+	            implementation 'com.github.kernhu:stamper:Tag'
 	}
 ```
+
 ## III: Contact me
 
 Email: vsky580@gmail.com  
